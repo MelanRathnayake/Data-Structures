@@ -1,0 +1,135 @@
+public class DequeUsingLinkedList {
+    
+    // Node class to represent elements in the deque
+    private class Node {
+        int data;
+        Node prev;
+        Node next;
+        
+        Node(int data) {
+            this.data = data;
+        }
+    }
+    
+    private Node front; // Front of the deque
+    private Node rear;  // Rear of the deque
+    private int size;   // Size of the deque
+    
+    // Constructor
+    public DequeUsingLinkedList() {
+        front = null;
+        rear = null;
+        size = 0;
+    }
+    
+    // Insert an element at the front of the deque
+    public void addFirst(int item) {
+        Node newNode = new Node(item);
+        if (isEmpty()) {
+            front = newNode;
+            rear = newNode;
+        } else {
+            newNode.next = front;
+            front.prev = newNode;
+            front = newNode;
+        }
+        size++;
+    }
+    
+    // Insert an element at the back of the deque
+    public void addLast(int item) {
+        Node newNode = new Node(item);
+        if (isEmpty()) {
+            front = newNode;
+            rear = newNode;
+        } else {
+            rear.next = newNode;
+            newNode.prev = rear;
+            rear = newNode;
+        }
+        size++;
+    }
+    
+    // Remove and return the element from the front of the deque
+    public int removeFirst() {
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException("Deque is empty");
+        }
+        int removedItem = front.data;
+        front = front.next;
+        if (front != null) {
+            front.prev = null;
+        } else {
+            rear = null; // if front is null, rear should also be null
+        }
+        size--;
+        return removedItem;
+    }
+    
+    // Remove and return the element from the back of the deque
+    public int removeLast() {
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException("Deque is empty");
+        }
+        int removedItem = rear.data;
+        rear = rear.prev;
+        if (rear != null) {
+            rear.next = null;
+        } else {
+            front = null; // if rear is null, front should also be null
+        }
+        size--;
+        return removedItem;
+    }
+    
+    // Peek at the element at the front of the deque without removing it
+    public int peekFirst() {
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException("Deque is empty");
+        }
+        return front.data;
+    }
+    
+    // Peek at the element at the back of the deque without removing it
+    public int peekLast() {
+        if (isEmpty()) {
+            throw new IndexOutOfBoundsException("Deque is empty");
+        }
+        return rear.data;
+    }
+    
+    // Check if the deque is empty
+    public boolean isEmpty() {
+        return size == 0;
+    }
+    
+    // Get the size of the deque
+    public int size() {
+        return size;
+    }
+    
+    public static void main(String[] args) {
+        DequeUsingLinkedList deque = new DequeUsingLinkedList();
+        
+        deque.addFirst(1);
+        deque.addLast(4);
+        deque.addFirst(2);
+        deque.addLast(3);
+        
+        System.out.println("---------------------------------");
+        System.out.println("First element: " + deque.peekFirst()); 
+        System.out.println("Last element: " + deque.peekLast()); 
+        
+        System.out.println("Deque size: " + deque.size()); 
+        System.out.println("---------------------------------");
+
+        System.out.println("Removed first: " + deque.removeFirst()); 
+        System.out.println("Removed last: " + deque.removeLast()); 
+        System.out.println("---------------------------------");
+        System.out.println("First element: " + deque.peekFirst());
+        System.out.println("Last element: " + deque.peekLast()); 
+        
+        System.out.println("Deque size: " + deque.size()); 
+        System.out.println("---------------------------------");
+    }
+}
